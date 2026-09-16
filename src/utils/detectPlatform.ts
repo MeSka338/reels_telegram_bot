@@ -6,38 +6,33 @@ export function detectPlatform(url: string): Platform | null {
     const hostname = parsedUrl.hostname.replace(/^www\./, "").toLowerCase();
     const pathname = parsedUrl.pathname.toLowerCase();
 
-    // Instagram Reels
     if (
       (hostname === "instagram.com" || hostname === "m.instagram.com") &&
-      (pathname.startsWith("/reel/") || pathname.startsWith("/reels/"))
+      /^\/reels?\/[^/]+\/?$/.test(pathname)
     ) {
       return "instagram";
     }
 
-    // YouTube
     if (
-      hostname === "youtube.com" ||
-      hostname === "m.youtube.com" ||
-      hostname === "youtu.be"
+      (hostname === "youtu.be" && pathname.length > 1) ||
+      ((hostname === "youtube.com" || hostname === "m.youtube.com") &&
+        ((pathname === "/watch" && parsedUrl.searchParams.has("v")) ||
+          /^\/(shorts|live|embed)\/[^/]+\/?$/.test(pathname)))
     ) {
       return "youtube";
     }
 
-    // TikTok
     if (
-      hostname === "tiktok.com" ||
-      hostname === "m.tiktok.com" ||
-      hostname === "vm.tiktok.com" ||
-      hostname === "vt.tiktok.com"
+      (hostname === "tiktok.com" && /^\/@[^/]+\/video\/\d+\/?$/.test(pathname)) ||
+      ((hostname === "vm.tiktok.com" || hostname === "vt.tiktok.com") &&
+        pathname.length > 1)
     ) {
       return "tiktok";
     }
 
-    // VK
     if (
-      hostname === "vk.com" ||
-      hostname === "m.vk.com" ||
-      hostname === "vkvideo.ru"
+      ((hostname === "vk.com" || hostname === "m.vk.com") && /^\/(video|clip)/.test(pathname)) ||
+      (hostname === "vkvideo.ru" && pathname.length > 1)
     ) {
       return "vk";
     }

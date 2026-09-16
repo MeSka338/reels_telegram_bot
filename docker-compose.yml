@@ -1,6 +1,6 @@
 services:
   reels-bot:
-    image: ghcr.io/meska338/instagram-check:latest
+    image: ghcr.io/meska338/instagram-check:${IMAGE_TAG:-latest}
     container_name: reels-bot
 
     restart: unless-stopped

@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем yt-dlp
-RUN pip3 install --break-system-packages -U "yt-dlp[curl-cffi]"
+ARG YT_DLP_VERSION=2026.08.19
+RUN pip3 install --no-cache-dir --break-system-packages "yt-dlp[curl-cffi]==${YT_DLP_VERSION}"
 
 WORKDIR /app
 
@@ -20,5 +21,8 @@ RUN npm ci
 COPY . .
 
 RUN npm run build
+
+# The compiled application does not need the TypeScript toolchain at runtime.
+RUN npm prune --omit=dev
 
 CMD ["node", "dist/index.js"]

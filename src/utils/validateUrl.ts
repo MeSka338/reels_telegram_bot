@@ -1,15 +1,6 @@
-export function isInstagramReelUrl(value: string): boolean {
-  try {
-    const url = new URL(value);
+import { detectPlatform } from "./detectPlatform.js";
 
-    const isInstagram =
-      url.hostname === "instagram.com" || url.hostname === "www.instagram.com";
-
-    const isReel =
-      url.pathname.startsWith("/reel/") || url.pathname.startsWith("/reels/");
-
-    return isInstagram && isReel;
-  } catch {
-    return false;
-  }
+/** Returns true only for a supported, video-shaped public URL. */
+export function isSupportedVideoUrl(value: string): boolean {
+  return detectPlatform(value.trim()) !== null;
 }
