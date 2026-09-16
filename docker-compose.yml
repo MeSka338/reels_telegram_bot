@@ -1,0 +1,9 @@
+services:
+  reels-bot:
+    image: ghcr.io/MeSka338/instagram-check:latest
+    container_name: reels-bot
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
