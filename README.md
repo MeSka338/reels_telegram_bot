@@ -11,4 +11,4 @@ The image pins yt-dlp to `2026.08.19`; update the `YT_DLP_VERSION` build argumen
 
 ## Deployment
 
-The GitHub workflow publishes both `latest` and an immutable image tag equal to the commit SHA, then deploys that SHA. Configure `VPS_SSH_KEY`, `VPS_HOST`, `VPS_USER`, and `VPS_KNOWN_HOSTS` secrets. `VPS_KNOWN_HOSTS` must contain the pre-verified host key line for the VPS, rather than a key fetched during deployment.
+The GitHub workflow publishes both `latest` and an immutable image tag equal to the commit SHA, then deploys that SHA. Configure `VPS_SSH_KEY`, `VPS_HOST`, and `VPS_USER`. Optionally configure `VPS_KNOWN_HOSTS` with the pre-verified host key line for the VPS; when it is absent, the workflow keeps backward compatibility by fetching the key during deployment.
